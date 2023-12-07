@@ -1,21 +1,25 @@
 import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
 import { Link } from "react-router-dom";
 import { TextField, Button, Stack } from '@mui/material'; // Import Material-UI components
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/auth/register';
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour l'email
+const REGISTER_URL = '/auth/signup';
 
 const Register = () => {
     const userRef = useRef();
+    const emailRef = useRef();
     const errRef = useRef();
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
+    
+    const [email, setEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(false);
+    const [emailFocus, setEmailFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -37,6 +41,10 @@ const Register = () => {
     }, [user])
 
     useEffect(() => {
+        setValidEmail(EMAIL_REGEX.test(email));
+    }, [email])
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
@@ -48,14 +56,20 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const v1 = USER_REGEX.test(user);
-        const v2 = PWD_REGEX.test(pwd);
-        if (!v1 || !v2) {
+        const v2 = EMAIL_REGEX.test(email); // Validation de l'email
+        const v3 = PWD_REGEX.test(pwd);
+        if (!v1 || !v2 || !v3) {
             setErrMsg("Invalid Entry");
             return;
         }
         try {
+            const data = {
+                username: user,
+                password: pwd,
+                email: email
+            }
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
+                JSON.stringify(data),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -82,49 +96,82 @@ const Register = () => {
         <>
             {success ? (
                 <section>
-                    <h1>Success!</h1>
+                    <h1>Connexion réussie</h1>
                     <p>
-                        <Link to="/login">Sign In</Link>
+                        <Link to="/login">Connectez-vous</Link>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section  className={"centre"}>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1>Inscrivez-vous</h1>
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2} direction="column" sx={{ width: '100%' }}>
                             <TextField
                                 id="username"
-                                label="Username"
+                                label="Pseudo"
                                 variant="outlined"
                                 inputRef={userRef}
                                 autoComplete="off"
                                 onChange={(e) => setUser(e.target.value)}
+                                inputProps={{
+                                    onFocus: () => setUserFocus(true),
+                                    onBlur: () => setUserFocus(false),
+                                }}
                                 value={user}
                                 required
                             />
-                            <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                                <FontAwesomeIcon icon={faInfoCircle} />
-                                4 to 24 characters.<br />
-                                Must begin with a letter.<br />
-                                Letters, numbers, underscores, hyphens allowed.
-                            </p>
+                            {!userFocus && user && !validName && (
+                                <p id="uidnote" className={"instructions"}>
+                                    {user.length < 4 || user.length > 24 ?
+                                        ("Doit être entre 4 et 24 caractères.") :
+                                        ("Doit commencer par une lettre et ne peut contenir que des lettres,des chiffres, des tirets et des traits de soulignement.")
+                                    }
+                                </p>
+                            )}
+                            
+                            <TextField
+                                id="email"
+                                label="Email"
+                                autoComplete="off"
+                                inputRef={emailRef}
+                                onChange={(e) => setEmail(e.target.value)}
+                                inputProps={{
+                                    onFocus: () => setEmailFocus(true),
+                                    onBlur: () => setEmailFocus(false),
+                                }}
+                                value={email}
+                                required
+                            />
+                            {!emailFocus && email && !validEmail && (
+                                <p id="emailnote" className={"instructions"}>
+                                    Doit être une adresse email valide.
+                                </p>
+                            )}
 
                             <TextField
                                 id="password"
-                                label="Password"
+                                label="Mot de passe"
                                 variant="outlined"
                                 type="password"
                                 onChange={(e) => setPwd(e.target.value)}
+                                inputProps={{
+                                    onFocus: () => setPwdFocus(true),
+                                    onBlur: () => setPwdFocus(false),
+                                }}
                                 value={pwd}
                                 required
                             />
-                            <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                                <FontAwesomeIcon icon={faInfoCircle} />
-                                8 to 24 characters.<br />
-                                Must include uppercase and lowercase letters, a number and a special character.<br />
-                                Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                            </p>
+
+
+                            {!pwdFocus && pwd && !validPwd && (
+                                <p id="pwdnote" className={"instructions"}>
+                                    {pwd.length < 8 || pwd.length > 24 ?
+                                        ("Doit être entre 8 et 24 caractères.") :
+                                        ("Doit inclure des lettres majuscules et minuscules, un chiffre et un caractère spécial.")}
+                                </p>
+                            )}
+
 
                             <TextField
                                 id="confirm_pwd"
@@ -132,21 +179,27 @@ const Register = () => {
                                 variant="outlined"
                                 type="password"
                                 onChange={(e) => setMatchPwd(e.target.value)}
+                                inputProps={{
+                                    onFocus: () => setMatchFocus(true),
+                                    onBlur: () => setMatchFocus(false),
+                                }}
                                 value={matchPwd}
                                 required
                             />
-                            <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                                <FontAwesomeIcon icon={faInfoCircle} />
-                                Must match the first password input field.
-                            </p>
 
-                            <Button disabled={!validName || !validPwd || !validMatch} variant="contained" type="submit">Sign Up</Button>
+                            {!matchFocus && matchPwd && !validMatch && (
+                                <p id="confirmnote" className={"instructions"}>
+                                    Doit correspondre au premier champ de saisie du mot de passe.
+                                </p>
+                            )}
+
+                            <Button disabled={!validName || !validEmail || !validPwd || !validMatch} variant="contained" type="submit">S'inscrire</Button>
                         </Stack>
                     </form>
                     <p>
-                        Already registered?<br />
+                        Déjà inscrit?<br />
                         <span className="line">
-                            <Link to="/login">Sign In</Link>
+                            <Link to="/login">Se connecter</Link>
                         </span>
                     </p>
                 </section>

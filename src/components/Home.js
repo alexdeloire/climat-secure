@@ -1,33 +1,60 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
+import { AppBar, Button, Container, IconButton, Toolbar, Typography } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
 
 const Home = () => {
-    const navigate = useNavigate();
     const logout = useLogout();
 
     const signOut = async () => {
         await logout();
-        navigate('/linkpage');
-    }
+    };
 
     return (
-        <section>
-            <h1>Home</h1>
-            <br />
-            <p>You are logged in!</p>
-            <br />
-            <Link to="/editor">Go to the Editor page</Link>
-            <br />
-            <Link to="/admin">Go to the Admin page</Link>
-            <br />
-            <Link to="/lounge">Go to the Lounge</Link>
-            <br />
-            <Link to="/linkpage">Go to the link page</Link>
-            <div className="flexGrow">
-                <button onClick={signOut}>Sign Out</button>
-            </div>
-        </section>
-    )
-}
+        <div>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Home
+                    </Typography>
+                    <IconButton color="inherit">
+                        <AccountCircle />
+                    </IconButton>
+                    <Button color="inherit" onClick={signOut}>
+                        Sign Out
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <Container sx={{ paddingTop: 4 }}>
+                <Typography variant="h4" gutterBottom>
+                    Welcome to Your Home Page
+                </Typography>
+                <Typography variant="body1" paragraph>
+                    You are logged in!
+                </Typography>
+                <Link to="/editor" style={{ marginRight: 16 }}>
+                    Go to the Editor page
+                </Link>
+                <Link to="/admin" style={{ marginRight: 16 }}>
+                    Go to the Admin page
+                </Link>
+                <Link to="/lounge" style={{ marginRight: 16 }}>
+                    Go to the Lounge
+                </Link>
+                <Link to="/linkpage" style={{ marginRight: 16 }}>
+                    Go to the link page
+                </Link>
+                <div className="flexGrow"></div>
+                <Typography variant="h6" gutterBottom>
+                    Your Pseudo
+                </Typography>
+                <textarea
+                    placeholder="Write your post here..."
+                    style={{ width: "100%", minHeight: 100, padding: 8 }}
+                />
+            </Container>
+        </div>
+    );
+};
 
-export default Home
+export default Home;

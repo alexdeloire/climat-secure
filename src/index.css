@@ -14,9 +14,9 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: dodgerblue;
+    background-color: green;
 }
-
+/*
 .App {
   display: flex;
   flex-direction: column;
@@ -24,7 +24,8 @@ body {
   align-items: center;
   min-height: 100vh; 
   padding: 1rem 0.5rem;
-}
+}*/
+
 section {
     width: 100%;
     max-width: 420px;

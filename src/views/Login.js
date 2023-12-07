@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import {TextField, Button, Stack, Container} from '@mui/material';
+import {TextField, Button, Stack} from '@mui/material';
 
 import axios from '../api/axios';
 const LOGIN_URL = '/auth/token';
@@ -78,7 +78,7 @@ const Login = () => {
 
     return (
 
-        <section>
+        <section className='centre'>
             
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <h1>Sign In</h1>

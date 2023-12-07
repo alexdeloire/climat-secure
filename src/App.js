@@ -1,4 +1,4 @@
-import Register from './components/Register';
+import Register from './views/Register';
 import Login from './views/Login';
 import Home from './components/Home';
 import Layout from './components/Layout';
@@ -24,6 +24,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
+        <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="linkpage" element={<LinkPage />} />
@@ -32,7 +33,6 @@ function App() {
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/" element={<Home />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Super]} />}>
