@@ -21,7 +21,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" className="navbar">
                 <Toolbar>
                     <Button color="inherit" onClick={() => navigate('/')}>
                         Accueil
