@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { TextField, Button } from '@mui/material';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
@@ -10,6 +10,7 @@ const EditPost = () => {
     const [editedContent, setEditedContent] = useState('');
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         // Fetch the specific post based on post_id
@@ -21,6 +22,7 @@ const EditPost = () => {
                 setEditedContent(response.data.content);
             } catch (error) {
                 console.error('Error fetching post:', error);
+                navigate('/login', { state: { from: location }, replace: true });
             }
         };
 
@@ -39,6 +41,7 @@ const EditPost = () => {
             navigate('/mes-postes');
         } catch (error) {
             console.error('Error updating post:', error);
+            navigate('/login', { state: { from: location }, replace: true });
         }
     };
 
@@ -51,16 +54,18 @@ const EditPost = () => {
             navigate('/mes-postes');
         } catch (error) {
             console.error('Error deleting post:', error);
+            navigate('/login', { state: { from: location }, replace: true });
         }
     };
 
     return (
-        <div>
+        <div style={{ textAlign: 'center', padding: '16px' }}>
             <h2>Edit Post</h2>
             <TextField
                 label="Title"
                 variant="outlined"
                 fullWidth
+                style={{ marginBottom: '8px' }}
                 value={editedTitle}
                 onChange={(e) => setEditedTitle(e.target.value)}
             />
@@ -70,13 +75,22 @@ const EditPost = () => {
                 multiline
                 rows={4}
                 fullWidth
+                style={{ marginBottom: '8px' }}
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
             />
-            <Button variant="contained" onClick={handleUpdatePost}>
+            <Button
+                variant="contained"
+                style={{ marginBottom: '8px' }}
+                onClick={handleUpdatePost}
+            >
                 Update
             </Button>
-            <Button variant="outlined" color="error" onClick={handleDeletePost}>
+            <Button
+                variant="outlined"
+                color="error"
+                onClick={handleDeletePost}
+            >
                 Delete
             </Button>
         </div>

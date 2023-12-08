@@ -61,56 +61,63 @@ const MesPostes = () => {
             setPosts([...posts, response.data]);
         } catch (error) {
             console.error('Error creating post:', error);
+            navigate('/login', { state: { from: location }, replace: true });
         }
     };
 
     return (
-        <div>
-            <div>
-                {/* Form to create a new post */}
-                <TextField
-                    label="Title"
-                    variant="outlined"
-                    value={newPostTitle}
-                    onChange={(e) => setNewPostTitle(e.target.value)}
-                />
-                <TextField
-                    label="Content"
-                    variant="outlined"
-                    multiline
-                    rows={4}
-                    value={newPostContent}
-                    onChange={(e) => setNewPostContent(e.target.value)}
-                />
-                <Button variant="contained" onClick={handleCreatePost}>
-                    Create Post
-                </Button>
-            </div>
-            <Grid container spacing={2}>
-                {posts.map((post) => (
-                    <Grid item key={post.post_id} xs={12}>
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h6" component="div">
-                                    {post.title}
-                                </Typography>
-                                <Typography color="textSecondary" gutterBottom>
-                                    {`Posted by ${post.username} on ${new Date(
-                                        post.created_at
-                                    ).toLocaleString()}`}
-                                </Typography>
-                                <Typography variant="body2" component="div">
-                                    {post.content}
-                                </Typography>
-                                <Button variant="outlined" onClick={() => handleEditClick(post.post_id)}>
-                                    Edit
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+        <div style={{ marginTop: '16px', marginBottom: '16px' }}>
+        <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            {/* Form to create a new post */}
+            <TextField
+                label="Title"
+                variant="outlined"
+                style={{ marginBottom: '8px' }}
+                value={newPostTitle}
+                onChange={(e) => setNewPostTitle(e.target.value)}
+            />
+            <TextField
+                label="Content"
+                variant="outlined"
+                multiline
+                rows={4}
+                style={{ marginBottom: '8px' }}
+                value={newPostContent}
+                onChange={(e) => setNewPostContent(e.target.value)}
+            />
+            <Button variant="contained" onClick={handleCreatePost}>
+                Create Post
+            </Button>
         </div>
+        <Grid container spacing={2} >
+            {posts.map((post) => (
+                <Grid item key={post.post_id} xs={12}>
+                    <Card style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+                        <CardContent style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <Typography variant="h6" component="div">
+                                {post.title}
+                            </Typography>
+                            <Typography color="textSecondary" gutterBottom>
+                                {`Posted by ${post.username} on ${new Date(
+                                    post.created_at
+                                ).toLocaleString()}`}
+                            </Typography>
+                            <Typography variant="body2" component="div">
+                                {post.content}
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                style={{ marginTop: '8px' }}
+                                onClick={() => handleEditClick(post.post_id)}
+                            >
+                                Edit
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            ))}
+        </Grid>
+    </div>
     );
 };
 
