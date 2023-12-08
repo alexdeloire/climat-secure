@@ -1,7 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect} from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import {TextField, Button, Stack} from '@mui/material';
+import { TextField, Button, Stack } from '@mui/material';
 
 import axios from '../api/axios';
 const LOGIN_URL = '/auth/token';
@@ -46,10 +46,9 @@ const Login = () => {
                 formData,
                 config
             );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.access_token;
             const roles = response?.data?.roles;
+            console.log(response?.data);
             setAuth({ user, pwd, roles, accessToken });
             setUser('');
             setPwd('');
@@ -75,57 +74,62 @@ const Login = () => {
     useEffect(() => {
         localStorage.setItem("persist", persist);
     }, [persist])
+    
 
     return (
+        <> 
+            <Button component={Link} to="/" sx={{ color: "white" }}>
+                 Accueil </Button>
+            <div className='centre'>
+                <section>
+                
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <h1>Connexion</h1>
 
-        <section className='centre'>
-            
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h1>Sign In</h1>
-
-                <form onSubmit={handleSubmit}>
-                    <Stack spacing={2} direction="column" sx={{ width: '100%' }}>
-                        <TextField
-                            id="username"
-                            label="Username"
-                            variant="outlined"
-                            inputRef={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                            />
-
-                        <TextField
-                            id="password"
-                            label="Password"
-                            variant="outlined"
-                            type="password"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                            />
-                        <Button variant="contained" type="submit">Sign In</Button>
-                        <div className="persistCheck">
-                            <input
-                                type="checkbox"
-                                id="persist"
-                                onChange={togglePersist}
-                                checked={persist}
+                    <form onSubmit={handleSubmit}>
+                        <Stack spacing={2} direction="column" sx={{ width: '100%' }}>
+                            <TextField
+                                id="username"
+                                label="Pseudo"
+                                variant="outlined"
+                                inputRef={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
                                 />
-                            <label htmlFor="persist">Trust This Device</label>
-                        </div>
-                    </Stack>
-                </form>
-                <p>
-                    Need an Account?<br />
-                    <span className="line">
-                        <Link to="/register">Sign Up</Link>
-                    </span>
-                </p>
 
-        </section>
+                            <TextField
+                                id="password"
+                                label="Mot de passe"
+                                variant="outlined"
+                                type="password"
+                                onChange={(e) => setPwd(e.target.value)}
+                                value={pwd}
+                                required
+                                />
+                            <Button variant="contained" type="submit">Se connecter</Button>
+                            <div className="persistCheck">
+                                <input
+                                    type="checkbox"
+                                    id="persist"
+                                    onChange={togglePersist}
+                                    checked={persist}
+                                    />
+                                <label htmlFor="persist">Se souvenir de moi</label>
+                            </div>
+                        </Stack>
+                    </form>
+                    <p>
+                        Besoin d'un compte ? <br />
+                        <span className="line">
+                            <Link to="/register">S'inscrire</Link>
+                        </span>
+                    </p>
 
+            </section>
+        </div>
+    </>
     )
 }
 

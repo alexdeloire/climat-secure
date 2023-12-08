@@ -1,17 +1,24 @@
 import { useRef, useState, useEffect } from "react";
 import axios from '../api/axios';
+import useAuth from '../hooks/useAuth';
 import { Link } from "react-router-dom";
 import { TextField, Button, Stack } from '@mui/material'; // Import Material-UI components
+import { useNavigate } from "react-router-dom/dist";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour l'email
 const REGISTER_URL = '/auth/signup';
+const LOGIN_URL = '/auth/token';
 
 const Register = () => {
+    const { setAuth } = useAuth();
+
     const userRef = useRef();
     const emailRef = useRef();
     const errRef = useRef();
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -30,10 +37,11 @@ const Register = () => {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
+        if (userRef.current) {
+            userRef.current.focus();
+        }
     }, [])
 
     useEffect(() => {
@@ -76,10 +84,6 @@ const Register = () => {
                 }
             );
             console.log(JSON.stringify(response?.data));
-            setSuccess(true);
-            setUser('');
-            setPwd('');
-            setMatchPwd('');
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -90,19 +94,40 @@ const Register = () => {
             }
             errRef.current.focus();
         }
+
+
+        // login
+        const formData = new FormData();
+        formData.append('username', user);
+        formData.append('password', pwd);
+
+        const config = {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            withCredentials: true
+        };
+
+        try {
+            const response = await axios.post(LOGIN_URL,
+                formData,
+                config
+            );
+            const accessToken = response?.data?.access_token;
+            const roles = response?.data?.roles;
+            setAuth({ user, pwd, roles, accessToken });
+            navigate('/');
+        } catch (err) {
+            navigate('/login');
+        }
+
     }
 
     return (
         <>
-            {success ? (
+            <Button component={Link} to="/" sx={{ color: "white" }}>Accueil </Button>
+            <div className='centre'>
                 <section>
-                    <h1>Connexion réussie</h1>
-                    <p>
-                        <Link to="/login">Connectez-vous</Link>
-                    </p>
-                </section>
-            ) : (
-                <section  className={"centre"}>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Inscrivez-vous</h1>
                     <form onSubmit={handleSubmit}>
@@ -120,7 +145,7 @@ const Register = () => {
                                 }}
                                 value={user}
                                 required
-                            />
+                                />
                             {!userFocus && user && !validName && (
                                 <p id="uidnote" className={"instructions"}>
                                     {user.length < 4 || user.length > 24 ?
@@ -142,7 +167,7 @@ const Register = () => {
                                 }}
                                 value={email}
                                 required
-                            />
+                                />
                             {!emailFocus && email && !validEmail && (
                                 <p id="emailnote" className={"instructions"}>
                                     Doit être une adresse email valide.
@@ -161,7 +186,7 @@ const Register = () => {
                                 }}
                                 value={pwd}
                                 required
-                            />
+                                />
 
 
                             {!pwdFocus && pwd && !validPwd && (
@@ -185,7 +210,7 @@ const Register = () => {
                                 }}
                                 value={matchPwd}
                                 required
-                            />
+                                />
 
                             {!matchFocus && matchPwd && !validMatch && (
                                 <p id="confirmnote" className={"instructions"}>
@@ -203,7 +228,7 @@ const Register = () => {
                         </span>
                     </p>
                 </section>
-            )}
+            </div>
         </>
     )
 }

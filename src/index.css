@@ -14,17 +14,26 @@ html {
 
 body {
     min-height: 100vh;
-    background-color: green;
 }
-/*
-.App {
+
+.App{
+    background-color: green;
+    min-height: 100vh;
+}
+
+.Konami{
+    background-color: red;
+    min-height: 100vh;
+}
+
+.centre {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
   padding: 1rem 0.5rem;
-}*/
+}
 
 section {
     width: 100%;
