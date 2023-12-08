@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     const easterEgg = () => {
         setKonami(true);
-        alert('Attention! Tu vas voir un futur nétagif!');
+        alert('Ohoh tu as trouvé le Konami Code ! Un petit aperçu de ce qui nous attend ?');
     };
 
     useKonami(easterEgg);

@@ -17,7 +17,7 @@ body {
 }
 
 .App{
-    background-color: green;
+    background-color: #78e35d;
     min-height: 100vh;
 }
 
@@ -33,6 +33,33 @@ body {
   align-items: center;
   min-height: 100vh; 
   padding: 1rem 0.5rem;
+}
+
+.answer {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #555;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 1s;
+}
+  
+.answer:hover {
+    background-color: #ddd;
+}
+  
+.answer.correct {
+    background-color: #4caf50;
+    color: white;
+}
+  
+.answer.incorrect {
+    background-color: #f44336;
+    color: white;
 }
 
 section {
@@ -56,6 +83,37 @@ form {
     padding-bottom: 1rem;
 }
 
+
+@keyframes rotateMouse {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .mouse-animation {
+    animation: rotateMouse 2s linear infinite;
+  }
+
+
+  .instructions {
+    color: red; /* Couleur du texte pour les instructions */
+  }
+  
+  /* Effet de mouvement pour le bouton S'inscrire */
+  .signup-button {
+    transition: all 1s ease-in-out;
+  }
+  
+  .signup-button-disabled:hover {
+    transform: translateX(200px); /* Ajustez la valeur selon votre préférence */
+  }
+  
+  .signup-button-disabled {
+    width: 150px; /* Ajustez la largeur selon votre préférence */
+  }
 /*
 a, a:visited {
     color: #fff;
