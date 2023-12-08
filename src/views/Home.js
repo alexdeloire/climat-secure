@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Grid, Container, Card, CardContent } from '@mui/material';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [post, setPost] = useState({});

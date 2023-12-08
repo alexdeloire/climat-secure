@@ -169,3 +169,24 @@ form {
 .Konami .navbar {
     background-color: rgba(158, 44, 31, 1);
 }
+
+
+.App .Contenu {
+    border: 4px solid #fff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: rgba(55, 142, 33, 0.592);
+}
+
+.Konami .Contenu {
+    border: 4px solid #fff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: rgba(158, 44, 31, 0.592);
+}

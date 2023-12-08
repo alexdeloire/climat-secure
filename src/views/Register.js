@@ -219,7 +219,8 @@ const Register = () => {
                             )}
 
                             <Button
-                                className={!validName || !validEmail || !validPwd || !validMatch ? "signup-button-disabled" : "signup-button"}
+                                className={"signup-button"}
+                                disabled={!validName || !validEmail || !validPwd || !validMatch}
                                 variant="contained"
                                 type="submit">S'inscrire</Button>
                         </Stack>
