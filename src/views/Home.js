@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Grid, Container } from '@mui/material';
+import { Typography, Grid, Container, Card, CardContent } from '@mui/material';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState({});
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
 
-    const getPosts = async () => {
+    const getPost = async () => {
       try {
-        const response = await axiosPrivate.get('/posts', {
+        const response = await axiosPrivate.get('/posts/one', {
           signal: controller.signal,
         });
-        isMounted && setPosts(response.data);
+        console.log(response.data);
+        isMounted && setPost(response.data);
       } catch (err) {
         console.error(err);
       }
     };
 
-    getPosts();
+    getPost();
 
     return () => {
       isMounted = false;
@@ -31,27 +32,52 @@ const Home = () => {
   }, []);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="xd">
       <Grid container spacing={4}>
-        {/* Partie sur les idées reçues */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom color={"black"}>
             Idées reçues sur le réchauffement climatique
           </Typography>
-          <Typography>
-            {/* Ajoutez ici le contenu sur les idées reçues */}
+          <Typography align='justify' className='contenair-about' >
+            {`Les idées reçues sur le réchauffement climatique sont souvent ancrées dans la société,
+            créant parfois une confusion sur la réalité des changements climatiques.
+            L'une de ces croyances répandues est l'idée que le réchauffement climatique est
+            simplement un phénomène naturel attribuable aux cycles solaires. Cependant, 
+            la prépondérance des preuves scientifiques indique que les activités humaines,
+            telles que les émissions de gaz à effet de serre, jouent un rôle majeur dans
+            l'augmentation des températures globales. Une autre idée fausse courante est que
+            les variations climatiques naturelles rendent insignifiantes les contributions humaines
+            au changement climatique. En réalité, la rapidité du réchauffement observé au cours des
+            dernières décennies dépasse de loin les fluctuations historiques, soulignant l'influence 
+            significative des activités anthropiques. Ainsi, démystifier ces idées reçues est crucial 
+            pour promouvoir une compréhension précise du réchauffement climatique et encourager des actions 
+            visant à atténuer ses effets néfastes.`}
           </Typography>
         </Grid>
 
         {/* Partie pour le dernier poste publié */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom color={"black"}>
             Dernier Poste Publié
           </Typography>
-          {posts.length > 0 ? (
-            <Link to={`/post/${posts[0].post_id}`}>
-              <Typography variant="h6">{posts[0].title}</Typography>
-            </Link>
+          {post ? (
+            <Grid item key={post.post_id} xs={12}>
+                <Card>
+                    <CardContent>
+                        <Typography variant="h6" component="div">
+                            {post.title}
+                        </Typography>
+                        <Typography color="textSecondary" gutterBottom>
+                            {`Posted by ${post.username} on ${new Date(
+                                post.created_at
+                            ).toLocaleString()}`}
+                        </Typography>
+                        <Typography variant="body2" component="div">
+                            {post.content}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
           ) : (
             <Typography>Aucun poste publié pour le moment.</Typography>
           )}

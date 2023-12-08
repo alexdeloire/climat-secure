@@ -125,7 +125,7 @@ const Register = () => {
 
     return (
         <>
-            <Button component={Link} to="/" sx={{ color: "white" }}>Accueil </Button>
+            <Button component={Link} to="/" sx={{ color: "black" }}>Accueil </Button>
             <div className='centre'>
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>

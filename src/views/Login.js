@@ -78,7 +78,7 @@ const Login = () => {
 
     return (
         <> 
-            <Button component={Link} to="/" sx={{ color: "white" }}>
+            <Button component={Link} to="/" sx={{ color: "black" }}>
                  Accueil </Button>
             <div className='centre'>
                 <section>
