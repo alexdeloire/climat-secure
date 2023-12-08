@@ -3,6 +3,7 @@ import Login from './views/Login';
 import Home from './views/Home';
 import Layout from './components/Layout';
 import Navigation from './components/Navigation';
+import Postes from './views/Postes';
 import Editor from './components/Editor';
 import Admin from './components/Admin';
 import Missing from './components/Missing';
@@ -30,6 +31,7 @@ function App() {
 
         <Route element={<Navigation />}>
           <Route path="/" element={<Home />} />
+          <Route path="postes" element={<Postes />} />
           <Route path="linkpage" element={<LinkPage />} />
           <Route path="unauthorized" element={<Unauthorized />} />
 
