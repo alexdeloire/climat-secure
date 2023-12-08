@@ -40,7 +40,7 @@ const Postes = () => {
                 variant="contained"
                 color="primary"
                 onClick={() => navigate('/mes-postes')}
-                style={{ marginBottom: '20px' }}
+                style={{ marginBottom: '20px', backgroundColor: 'rgb(30, 79, 18)' }}
             >
                 Accéder à mes postes
             </Button>

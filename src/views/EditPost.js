@@ -81,7 +81,7 @@ const EditPost = () => {
             />
             <Button
                 variant="contained"
-                style = {{ marginRight: '8px' }}
+                style = {{ marginRight: '8px', backgroundColor: 'rgb(30, 79, 18)' }}
                 onClick={handleUpdatePost}
             >
                 Update

@@ -85,7 +85,7 @@ const MesPostes = () => {
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
             />
-            <Button variant="contained" onClick={handleCreatePost}>
+            <Button variant="contained" onClick={handleCreatePost} style= {{backgroundColor: 'rgb(30, 79, 18)'}}>
                 Create Post
             </Button>
         </div>
@@ -107,7 +107,7 @@ const MesPostes = () => {
                             </Typography>
                             <Button
                                 variant="contained"
-                                style={{ marginTop: '8px', maxWidth: '100px' }}
+                                style={{ marginTop: '8px', maxWidth: '100px', backgroundColor: 'rgb(30, 79, 18)' }}
                                 onClick={() => handleEditClick(post.post_id)}
                             >
                                 Edit
