@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         // Fetch all users
@@ -14,6 +17,7 @@ const AdminPage = () => {
                 setUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
+                navigate('/login', { state: { from: location }, replace: true });
             }
         };
 
@@ -35,12 +39,13 @@ const AdminPage = () => {
             });
         } catch (error) {
             console.error('Error banning user:', error);
+            navigate('/login', { state: { from: location }, replace: true });
         }
     };
 
     return (
         <div>
-            <h2>Admin Page</h2>
+            <h2 style={{color:'black'}}>Admin Page</h2>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
