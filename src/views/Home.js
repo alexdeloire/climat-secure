@@ -35,7 +35,7 @@ const Home = () => {
     <Container maxWidth="xd">
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom color={"black"}>
+          <Typography variant="h4" gutterBottom className='title-home'>
             Idées reçues sur le réchauffement climatique
           </Typography>
           <Typography align='justify' className='contenair-about' >
@@ -57,7 +57,7 @@ const Home = () => {
 
         {/* Partie pour le dernier poste publié */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom color={"black"}>
+          <Typography variant="h4" gutterBottom className='title-home'>
             Dernier Poste Publié
           </Typography>
           {post ? (

@@ -121,7 +121,8 @@ form {
 
 .Konami, .App {
     background-size: 220%;
-    top: 50%;
+    min-width: 100%;
+    background-attachment: fixed;
     transition: background-position 2s ease; /* Ajoute une transition de 1 seconde avec une fonction d'accélération */
   }
   
@@ -135,7 +136,36 @@ form {
     background-position: left 60%; /* Démarre avec la moitié gauche affichée */
   }
   
-.contenair-about {
-    background-color: #66d44a;
+.App .contenair-about {
+    border: 4px solid #fff;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(55, 142, 33, 0.592);
 }
 
+.App .title-home{
+    padding-top: 10%;
+    padding-bottom: 5%;
+    color:  rgb(30, 79, 18);
+}
+
+.Konami .contenair-about {
+    border: 4px solid #fff;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(158, 44, 31, 0.592);
+}
+
+.Konami .title-home{
+    padding-top: 10%;
+    padding-bottom: 5%;
+    color:  rgb(95, 22, 22);
+}
+
+.App .navbar {
+    background-color: rgba(55, 142, 33, 1);
+}
+
+.Konami .navbar {
+    background-color: rgba(158, 44, 31, 1);
+}
