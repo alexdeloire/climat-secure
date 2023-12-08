@@ -60,7 +60,7 @@ const EditPost = () => {
 
     return (
         <div style={{ textAlign: 'center', padding: '16px' }}>
-            <h2>Edit Post</h2>
+            <h2 style = {{ color: 'black'}}>Edit Post</h2>
             <TextField
                 label="Title"
                 variant="outlined"
@@ -81,13 +81,13 @@ const EditPost = () => {
             />
             <Button
                 variant="contained"
-                style={{ marginBottom: '8px' }}
+                style = {{ marginRight: '8px' }}
                 onClick={handleUpdatePost}
             >
                 Update
             </Button>
             <Button
-                variant="outlined"
+                variant="contained"
                 color="error"
                 onClick={handleDeletePost}
             >

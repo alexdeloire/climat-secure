@@ -106,8 +106,8 @@ const MesPostes = () => {
                                 {post.content}
                             </Typography>
                             <Button
-                                variant="outlined"
-                                style={{ marginTop: '8px' }}
+                                variant="contained"
+                                style={{ marginTop: '8px', maxWidth: '100px' }}
                                 onClick={() => handleEditClick(post.post_id)}
                             >
                                 Edit
