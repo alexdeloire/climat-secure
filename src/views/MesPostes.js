@@ -74,6 +74,7 @@ const MesPostes = () => {
                 variant="outlined"
                 style={{ marginBottom: '8px' }}
                 value={newPostTitle}
+                sx = {{width:'100%',  maxWidth: '800px', margin: '0 auto', backgroundColor: 'rgba(255, 255, 255, 0.3)'}}
                 onChange={(e) => setNewPostTitle(e.target.value)}
             />
             <TextField
@@ -83,6 +84,7 @@ const MesPostes = () => {
                 rows={4}
                 style={{ marginBottom: '8px' }}
                 value={newPostContent}
+                sx = {{width:'100%',  maxWidth: '800px', margin: '0 auto', backgroundColor: 'rgba(255, 255, 255, 0.3)'}}
                 onChange={(e) => setNewPostContent(e.target.value)}
             />
             <Button variant="contained" onClick={handleCreatePost} style= {{backgroundColor: 'rgb(30, 79, 18)'}}>
