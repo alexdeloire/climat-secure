@@ -114,6 +114,28 @@ form {
   .signup-button-disabled {
     width: 150px; /* Ajustez la largeur selon votre préférence */
   }
+
+
+/* styles.css */
+
+
+.Konami, .App {
+    background-size: 220%;
+    top: 50%;
+    transition: background-position 1s ease; /* Ajoute une transition de 1 seconde avec une fonction d'accélération */
+  }
+  
+  .Konami {
+    background-image: url('./assets/rechauffement-climatique.jpg');
+    background-position: right 60%; /* Démarre avec la moitié droite affichée */
+  }
+  
+  .App {
+    background-image: url('./assets/rechauffement-climatique.jpg');
+    background-position: left 60%; /* Démarre avec la moitié gauche affichée */
+  }
+  
+  
 /*
 a, a:visited {
     color: #fff;

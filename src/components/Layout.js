@@ -7,8 +7,9 @@ const Layout = () => {
 
     return (
         <main className={konami ? "Konami" : "App"}>
+            {konami && <div className="background-half" />}
             <Outlet />
-        </main>
+         </main>
     )
 }
 
