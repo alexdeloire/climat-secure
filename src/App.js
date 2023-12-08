@@ -13,6 +13,8 @@ import Lounge from './components/Lounge';
 import LinkPage from './components/LinkPage';
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from './components/PersistLogin';
+import MesPostes from './views/MesPostes';
+import EditPost from './views/EditPost';
 import { Routes, Route } from 'react-router-dom';
 
 const ROLES = {
@@ -40,6 +42,8 @@ function App() {
           {/* we want to protect these routes */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="mes-postes" element={<MesPostes />} />
+              <Route path="edit-post/:post_id" element={<EditPost />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Super]} />}>
