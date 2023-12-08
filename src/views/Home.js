@@ -56,7 +56,7 @@ const Home = () => {
 
         {/* Partie pour le dernier poste publié */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" gutterBottom className='title-home'>
+          <Typography variant="h4" gutterBottom className='title-home2'>
             Dernier Poste Publié
           </Typography>
           {post ? (

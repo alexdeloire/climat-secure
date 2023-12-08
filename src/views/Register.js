@@ -93,6 +93,7 @@ const Register = () => {
                 setErrMsg('Registration Failed')
             }
             errRef.current.focus();
+            return;
         }
 
 
@@ -200,7 +201,7 @@ const Register = () => {
 
                             <TextField
                                 id="confirm_pwd"
-                                label="Confirm Password"
+                                label="Confirmez le mot de passe"
                                 variant="outlined"
                                 type="password"
                                 onChange={(e) => setMatchPwd(e.target.value)}

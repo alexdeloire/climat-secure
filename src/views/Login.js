@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect} from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { TextField, Button, Stack } from '@mui/material';
+import { TextField, Button, Stack, Alert, AlertTitle } from '@mui/material';
 
 import axios from '../api/axios';
 const LOGIN_URL = '/auth/token';
@@ -21,8 +21,10 @@ const Login = () => {
     const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
-        userRef.current.focus();
-    }, [])
+        if (userRef.current){
+            userRef.current.focus();
+        }
+    }, [userRef.current])
 
     useEffect(() => {
         setErrMsg('');
@@ -63,7 +65,6 @@ const Login = () => {
             } else {
                 setErrMsg('Login Failed');
             }
-            errRef.current.focus();
         }
     }
 
@@ -83,13 +84,19 @@ const Login = () => {
             <div className='centre'>
                 <section>
                 
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    {errMsg && (
+                            <Alert severity="error" onClose={() => setErrMsg('')}>
+                                <AlertTitle>Erreur</AlertTitle>
+                                {errMsg}
+                            </Alert>
+                    )}
                     <h1>Connexion</h1>
 
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2} direction="column" sx={{ width: '100%' }}>
                             <TextField
                                 id="username"
+                                className="Input"
                                 label="Pseudo"
                                 variant="outlined"
                                 inputRef={userRef}
@@ -108,7 +115,7 @@ const Login = () => {
                                 value={pwd}
                                 required
                                 />
-                            <Button variant="contained" type="submit">Se connecter</Button>
+                            <Button className="Input" variant="contained" type="submit">Se connecter</Button>
                             <div className="persistCheck">
                                 <input
                                     type="checkbox"
